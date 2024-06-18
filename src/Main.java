@@ -10,15 +10,16 @@ import java.util.ArrayList;
  */
 public class Main {
     public static void main(String[] args) {
-
+        /*
         Alumno alumno = new Alumno("Fede",28);
-        Alumno otro = new Alumno("Juan",25);
-        ArrayList<Alumno> alumnos = new ArrayList<>();
+        Alumno otro = new Alumno("Juan",25);*/
 
-        alumnos.add(alumno);
-        alumnos.add(otro);
+        ArrayList<Alumno> alumnos ; //No es necesaria inicializarlo porque se inicializa en la controladora
 
-        //ControladoraArchivosObj.grabarArchivoObjetos(alumnos);
+        /*alumnos.add(alumno);
+        alumnos.add(otro);*/
+
+        //ControladoraArchivosObj.grabarArchivoObjetos(alumnos); // Le puedo paso un arraylist para que me lo grabe
         alumnos = ControladoraArchivosObj.leerArchivosObjetos();
         System.out.println(alumnos.size());
         int index = 0;

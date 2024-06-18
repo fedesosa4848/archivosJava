@@ -16,13 +16,14 @@ import java.util.ArrayList;
  */
 
 
-public class ControladoraArchivosObj {
+public class ControladoraArchivosObj <T extends Serializable> {
 
     public static ArrayList<Alumno> leerArchivosObjetos() {
         ArrayList<Alumno> alumnos = new ArrayList<>();
+        FileInputStream fileInputStream = null;
         ObjectInputStream objectInputStream = null;
         try {
-            FileInputStream fileInputStream = new FileInputStream("alumnos.dat");
+            fileInputStream = new FileInputStream("alumnos.dat");
             objectInputStream = new ObjectInputStream(fileInputStream);
 
             //Si conocemos la cantidad excata de registros podemos hacer un for pero es mejor un while-true
@@ -36,38 +37,48 @@ public class ControladoraArchivosObj {
         {
             System.out.println("FIN");
         }
+
+        catch (ClassNotFoundException e) //Excepcion de que por ejemplo pasamos un archivo de perros y eran de personas
+        {
+            throw new RuntimeException(e);
+        }
         catch (FileNotFoundException ex) //Archivo no encontrado, dañado o se intenta grabar un directorio
         {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
         catch (IOException exception)
         {
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
         }
-        catch (ClassNotFoundException e)
-        {
-            throw new RuntimeException(e);
-        } finally
+        finally
         {
             try
             {
-                objectInputStream.close();
+                if(fileInputStream!= null){
+                    fileInputStream.close();
+                }
+                if(objectInputStream != null){
+                    objectInputStream.close();
+                }
             }
             catch (IOException ex)
             {
-
+                System.out.println(ex.getMessage());
             }
 
         }
         return  alumnos;
     }
 
+
+    //Recibe un arraylist de alumnos
     public static void grabarArchivoObjetos(ArrayList<Alumno> alumnos)
     {
+        FileOutputStream fileOutputStream = null;
         ObjectOutputStream objectOutputStream = null;
         try
         {
-            FileOutputStream fileOutputStream = new FileOutputStream("alumnos.dat");
+            fileOutputStream = new FileOutputStream("alumnos.dat");
             objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
             for (Alumno a : alumnos) {
@@ -77,21 +88,27 @@ public class ControladoraArchivosObj {
         }
         catch (FileNotFoundException ex)
         {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
         catch (IOException exception)
         {
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
         }
         finally
         {
             try
             {
-                objectOutputStream.close();
+
+                if(fileOutputStream != null){
+                    fileOutputStream.close();
+                }
+                if(objectOutputStream != null){
+                    objectOutputStream.close();
+                }
             }
             catch (IOException ex)
             {
-
+                System.out.println(ex.getMessage());
             }
 
         }

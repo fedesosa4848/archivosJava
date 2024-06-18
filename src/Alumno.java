@@ -3,7 +3,7 @@ import java.io.Serializable;
 public class Alumno implements Serializable
 {
     private String nombre;
-    private tran int edad;
+    private int edad;
 
     public Alumno(String nombre, int edad) {
         this.nombre = nombre;
